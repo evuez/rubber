@@ -17,30 +17,30 @@ When needed, the payload can be provided as an Elixir Map, which is internally c
 
 ## Overview
 
-Elastix has *5 main modules* and one *utility module*, that can be used, if the call/feature you want is not implemented (yet). However – please open issues or provide pull requests so I can improve the software for everybody. The modules are:
+Rubber has *5 main modules* and one *utility module*, that can be used, if the call/feature you want is not implemented (yet). However – please open issues or provide pull requests so I can improve the software for everybody. The modules are:
 
-* [Elastix.Index](lib/elastix/index.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html)
-* [Elastix.Document](lib/elastix/document.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)
-* [Elastix.Search](lib/elastix/search.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html)
-* [Elastix.Bulk](lib/elastix/bulk.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)
-* [Elastix.Mapping](lib/elastix/mapping.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
-* and [Elastix.HTTP](lib/elastix/http.ex) – a thin [HTTPoison](https://github.com/edgurgel/httpoison) wrapper
+* [Rubber.Index](lib/rubber/index.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html)
+* [Rubber.Document](lib/rubber/document.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)
+* [Rubber.Search](lib/rubber/search.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html)
+* [Rubber.Bulk](lib/rubber/bulk.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)
+* [Rubber.Mapping](lib/rubber/mapping.ex) corresponding to: [this official API Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
+* and [Rubber.HTTP](lib/rubber/http.ex) – a thin [HTTPoison](https://github.com/edgurgel/httpoison) wrapper
 
 I will try and provide documentation and examples for all of them with time, for now just consult the source code.
 
 ## Simple Example
 
-start elastix application dependencies (or define it as an application dependency in ```mix.exs```):
+start rubber application dependencies (or define it as an application dependency in ```mix.exs```):
 
 ```elixir
-Elastix.start()
+Rubber.start()
 
 ```
 
 create the Elastic index
 
 ```elixir
-Elastix.Index.create("http://127.0.0.1:9200", "sample_index_name", %{})
+Rubber.Index.create("http://127.0.0.1:9200", "sample_index_name", %{})
 
 ```
 
@@ -80,16 +80,16 @@ search_payload = %{}
 # which document types should be included in the search?
 search_in = [doc_type]
 
-Elastix.Mapping.put(elastic_url, index_name, doc_type, mapping)
-Elastix.Document.index(elastic_url, index_name, doc_type, product.id, index_data)
-Elastix.Search.search(elastic_url, index_name, search_in, search_payload)
-Elastix.Document.delete(elastic_url, index_name, doc_type, product.id)
+Rubber.Mapping.put(elastic_url, index_name, doc_type, mapping)
+Rubber.Document.index(elastic_url, index_name, doc_type, product.id, index_data)
+Rubber.Search.search(elastic_url, index_name, search_in, search_payload)
+Rubber.Document.delete(elastic_url, index_name, doc_type, product.id)
 
 ```
 
 ### Bulk request
 
-It is possible to execute `bulk` requests with *elastix*.
+It is possible to execute `bulk` requests with *rubber*.
 
 Bulk requests take as parameters the list of lines to send to *Elasticsearch*. You can also optionally give them options. Available options are:
 
@@ -107,14 +107,14 @@ lines = [
 ]
 
 # Send bulk data
-Elastix.Bulk.post elastic_url, lines, index: "my_index", type: "my_type"
+Rubber.Bulk.post elastic_url, lines, index: "my_index", type: "my_type"
 # Send your lines by transforming them to iolist
-Elastix.Bulk.post_to_iolist elastic_url, lines, index: "my_index", type: "my_type"
+Rubber.Bulk.post_to_iolist elastic_url, lines, index: "my_index", type: "my_type"
 
 # Send raw data directly to the API
 data = Enum.map(lines, fn line -> Poison.encode!(line) <> "\n" end)
 
-Elastix.Bulk.post_raw elastic_url, data, index: "my_index", type: "my_type"
+Rubber.Bulk.post_raw elastic_url, data, index: "my_index", type: "my_type"
 
 # Finally, you can specify the index or the type directly in you lines
 lines = [
@@ -124,13 +124,13 @@ lines = [
   %{field: "value2"}
 ]
 
-Elastix.Bulk.post elastic_url, lines
+Rubber.Bulk.post elastic_url, lines
 ```
 
 ## Configuration
 
 Currently we can
-  * pass options to the JSON decoder used by Elastix ([poison](https://github.com/devinus/poison))
+  * pass options to the JSON decoder used by Rubber ([poison](https://github.com/devinus/poison))
   * optionally use shield for authentication ([shield](https://www.elastic.co/products/shield))
   * optionally pass along custom headers for every request made to the elasticsearch server(s)s
   * optionally pass along options to [HTTPoison](https://github.com/edgurgel/httpoison)
@@ -138,12 +138,12 @@ Currently we can
 by setting the respective keys in your `config/config.exs`
 
 ```elixir
-config :elastix,
+config :rubber,
   poison_options: [keys: :atoms],
   shield: true,
   username: "username",
   password: "password",
-  httpoison_options: [hackney: [pool: :elastix_pool]]
+  httpoison_options: [hackney: [pool: :rubber_pool]]
 ```
 
 ### Custom headers
@@ -153,7 +153,7 @@ To add custom headers to a request you must pass in the custom_headers option.
 For example:
 
 ```elixir
-config :elastix,
+config :rubber,
   custom_headers: {MyModule, :add_aws_signature, ["us-east"]}
 ```
 
@@ -192,7 +192,7 @@ Then clone the repo and fetch its dependencies:
 
 ```
 $ git clone git@github.com:evuez/rubber.git
-$ cd elastix
+$ cd rubber
 $ mix deps.get
 $ mix test
 ```
