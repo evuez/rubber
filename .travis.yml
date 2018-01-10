@@ -7,4 +7,4 @@ services:
   - elasticsearch
 script: "mix test"
 notifications:
-  email: werbitzky@gmail.com
+  email: helloevuez@gmail.com
