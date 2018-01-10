@@ -80,6 +80,8 @@ defmodule Elastix.MappingTest do
     else
       assert response.body == %{}
     end
+
+    assert response.status_code == 404
   end
 
   test "get mapping should return mapping" do
