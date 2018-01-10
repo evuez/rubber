@@ -1,4 +1,4 @@
-# Elastix [![Build Status](https://travis-ci.org/evuez/elastix-reloaded.svg?branch=master)](https://travis-ci.org/evuez/elastix-reloaded)
+# Elastix: Reloaded [![Build Status](https://travis-ci.org/evuez/elastix-reloaded.svg?branch=master)](https://travis-ci.org/evuez/elastix-reloaded)
 
 A simple Elastic REST client written in Elixir.
 

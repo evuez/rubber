@@ -1,3 +1,9 @@
+## 0.5.1
+
+### Improvements
+
+  - Allow trailing slashes in URL
+
 ## 0.5.0
 
 ### Improvements
