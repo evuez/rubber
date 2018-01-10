@@ -11,6 +11,7 @@ defmodule Elastix.Mixfile do
      package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     aliases: aliases(),
      deps: deps()]
   end
 
@@ -44,5 +45,9 @@ defmodule Elastix.Mixfile do
      maintainers: ["evuez <helloevuez@gmail.com>"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/evuez/elastix-reloaded"}]
+  end
+
+  defp aliases do
+    ["compile": ["compile --warnings-as-errors"]]
   end
 end

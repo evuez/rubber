@@ -3,8 +3,12 @@ dist: trusty
 language: elixir
 elixir:
   - 1.3.3
+  - 1.4.5
+  - 1.5.3
 services:
   - elasticsearch
+before_script:
+  - mix credo --strict
 script: "mix test"
 notifications:
   email: helloevuez@gmail.com

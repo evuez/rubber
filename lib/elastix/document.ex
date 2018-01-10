@@ -60,7 +60,7 @@ defmodule Elastix.Document do
   @doc """
   Uses the Delete By Query API.
   """
-  def delete_matching(elastic_url, index_name, %{}=query, query_params \\ []) do
+  def delete_matching(elastic_url, index_name, %{} = query, query_params \\ []) do
     prepare_url(elastic_url, [index_name, "_delete_by_query"])
     |> add_query_params(query_params)
     |> HTTP.post(Poison.encode!(query))
