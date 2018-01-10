@@ -1,8 +1,8 @@
-defmodule Elastix.Bulk do
+defmodule Rubber.Bulk do
   @moduledoc """
   """
-  import Elastix.HTTP, only: [prepare_url: 2]
-  alias Elastix.HTTP
+  import Rubber.HTTP, only: [prepare_url: 2]
+  alias Rubber.HTTP
 
   def post(elastic_url, lines, options \\ [], query_params \\ []) do
     elastic_url

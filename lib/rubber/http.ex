@@ -1,4 +1,4 @@
-defmodule Elastix.HTTP do
+defmodule Rubber.HTTP do
   @moduledoc """
   """
   use HTTPoison.Base
@@ -25,7 +25,7 @@ defmodule Elastix.HTTP do
                    |> add_custom_headers(method, full_url, body)
 
     options = Keyword.merge(default_httpoison_options(), options)
-    {m, f, _a} = Elastix.config(:test_request_mfa) || {HTTPoison.Base, :request, []}
+    {m, f, _a} = Rubber.config(:test_request_mfa) || {HTTPoison.Base, :request, []}
     apply(m, f, [
       __MODULE__,
       method,
@@ -49,11 +49,11 @@ defmodule Elastix.HTTP do
   end
 
   defp poison_options do
-    Elastix.config(:poison_options, [])
+    Rubber.config(:poison_options, [])
   end
 
   defp default_httpoison_options do
-    Elastix.config(:httpoison_options, [])
+    Rubber.config(:httpoison_options, [])
   end
 
   defp add_content_type_header(headers) do
@@ -61,9 +61,9 @@ defmodule Elastix.HTTP do
   end
 
   defp add_shield_header(headers) do
-    if Elastix.config(:shield) do
-      username = Elastix.config(:username)
-      password = Elastix.config(:password)
+    if Rubber.config(:shield) do
+      username = Rubber.config(:username)
+      password = Rubber.config(:password)
       encoded  = Base.encode64("#{username}:#{password}")
       Keyword.put(headers, :"Authorization", "Basic " <> encoded)
     else
@@ -72,7 +72,7 @@ defmodule Elastix.HTTP do
   end
 
   defp add_custom_headers(headers, method, url, body) do
-    case Elastix.config(:custom_headers) do
+    case Rubber.config(:custom_headers) do
       nil -> headers
       {mod, fun, args} ->
         request = %{method: method, headers: headers, url: url, body: body}

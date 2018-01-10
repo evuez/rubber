@@ -1,9 +1,9 @@
-defmodule Elastix.IndexTest do
+defmodule Rubber.IndexTest do
   use ExUnit.Case
-  alias Elastix.Index
+  alias Rubber.Index
 
-  @test_url Elastix.config(:test_url)
-  @test_index Elastix.config(:test_index)
+  @test_url Rubber.config(:test_url)
+  @test_index Rubber.config(:test_index)
 
   setup do
     Index.delete(@test_url, @test_index)
