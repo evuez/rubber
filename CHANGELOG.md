@@ -1,3 +1,9 @@
+## 0.6.0
+
+### Improvements
+
+  - Add `count` to the Search module
+
 ## 0.5.1
 
 ### Improvements
