@@ -1,6 +1,10 @@
-# Elastix [![Hex Version](https://img.shields.io/hexpm/v/elastix.svg)](https://hex.pm/packages/elastix) [![Hex Downloads](https://img.shields.io/hexpm/dt/elastix.svg)](https://hex.pm/packages/elastix) [![Build Status](https://travis-ci.org/werbitzky/elastix.svg)](https://travis-ci.org/werbitzky/elastix) [![WTFPL](https://img.shields.io/badge/license-WTFPL-brightgreen.svg?style=flat)](https://www.tldrlegal.com/l/wtfpl)
+# Elastix
 
 A simple Elastic REST client written in Elixir.
+
+[elastix](https://github.com/werbitzky/elastix) doesn't seem to be maintained anymore so I'll try to keep this fork up-to-date.
+
+Even though the package (and this repo) use the name `elastix-reloaded` the app and top module are still named `[eE]lastix`.
 
 ## Preface
 
@@ -187,7 +191,7 @@ $ docker run -p 9200:9200 -it --rm elasticsearch:5.1.2
 Then clone the repo and fetch its dependencies:
 
 ```
-$ git clone git@github.com:werbitzky/elastix.git
+$ git clone git@github.com:evuez/elastix-reloaded.git
 $ cd elastix
 $ mix deps.get
 $ mix test
@@ -195,7 +199,5 @@ $ mix test
 
 ## License
 
-Copyright © 2017 El Werbitzky <werbitzky@gmail.com>
-This work is free. You can redistribute it and/or modify it under the
-terms of the Do What The Fuck You Want To Public License, Version 2,
-as published by Sam Hocevar. See [http://www.wtfpl.net/](http://www.wtfpl.net/) for more details.
+[elastix](https://github.com/werbitzky/elastix) was first licensed under the WTFPL by El Werbitzky <werbitzky@gmail.com>.
+elastic-*reloaded* is now distributed under the MIT License.

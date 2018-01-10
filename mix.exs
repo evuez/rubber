@@ -39,9 +39,10 @@ defmodule Elastix.Mixfile do
   end
 
   defp package do
-    [files: ["lib", "mix.exs", "README.md"],
-      maintainers: ["El Werbitzky"],
-      licenses: ["WTFPL 2"],
-      links: %{"GitHub" => "https://github.com/werbitzky/elastix"}]
+    [name: :elastix_reloaded,
+     files: ["lib", "mix.exs", "README.md"],
+     maintainers: ["evuez <helloevuez@gmail.com>"],
+     licenses: ["MIT"],
+     links: %{"GitHub" => "https://github.com/evuez/elastix-reloaded"}]
   end
 end
