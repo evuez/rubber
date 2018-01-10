@@ -1,11 +1,11 @@
-defmodule Elastix.BulkTest do
+defmodule Rubber.BulkTest do
   use ExUnit.Case
-  alias Elastix.Index
-  alias Elastix.Bulk
-  alias Elastix.Document
+  alias Rubber.Index
+  alias Rubber.Bulk
+  alias Rubber.Document
 
-  @test_url Elastix.config(:test_url)
-  @test_index Elastix.config(:test_index)
+  @test_url Rubber.config(:test_url)
+  @test_index Rubber.config(:test_index)
 
   setup do
     Index.delete(@test_url, @test_index)

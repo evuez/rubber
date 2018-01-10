@@ -1,12 +1,12 @@
-defmodule Elastix.SearchTest do
+defmodule Rubber.SearchTest do
   use ExUnit.Case
-  alias Elastix.Search
-  alias Elastix.Index
-  alias Elastix.Document
+  alias Rubber.Search
+  alias Rubber.Index
+  alias Rubber.Document
   alias HTTPoison.Response
 
-  @test_url Elastix.config(:test_url)
-  @test_index Elastix.config(:test_index)
+  @test_url Rubber.config(:test_url)
+  @test_index Rubber.config(:test_index)
   @document_data %{
     user: "werbitzky",
     post_date: "2009-11-15T14:12:12",

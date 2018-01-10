@@ -1,10 +1,10 @@
-defmodule Elastix.Mixfile do
+defmodule Rubber.Mixfile do
   use Mix.Project
 
   @version "0.6.0"
 
   def project do
-    [app: :elastix,
+    [app: :rubber,
      version: @version,
      elixir: "~> 1.0",
      description: "A simple Elasticsearch REST client written in Elixir.",
@@ -40,11 +40,10 @@ defmodule Elastix.Mixfile do
   end
 
   defp package do
-    [name: :elastix_reloaded,
-     files: ["lib", "mix.exs", "README.md"],
+    [files: ["lib", "mix.exs", "README.md"],
      maintainers: ["evuez <helloevuez@gmail.com>"],
      licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/evuez/elastix-reloaded"}]
+     links: %{"GitHub" => "https://github.com/evuez/rubber"}]
   end
 
   defp aliases do

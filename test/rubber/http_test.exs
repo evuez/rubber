@@ -1,8 +1,8 @@
-defmodule Elastix.HTTPTest do
+defmodule Rubber.HTTPTest do
   use ExUnit.Case
-  alias Elastix.HTTP
+  alias Rubber.HTTP
 
-  @test_url Elastix.config(:test_url)
+  @test_url Rubber.config(:test_url)
 
   test "prepare_url/2 should concat url with path" do
     assert HTTP.prepare_url("http://127.0.0.1:9200/", "/some_path") == "http://127.0.0.1:9200/some_path"
@@ -44,17 +44,17 @@ defmodule Elastix.HTTPTest do
 
   test "process_response_body parsed the body into an atom key map if configured" do
     body = "{\"some\":\"json\"}"
-    Application.put_env(:elastix, :poison_options, [keys: :atoms])
+    Application.put_env(:rubber, :poison_options, [keys: :atoms])
     assert HTTP.process_response_body(body) == %{some: "json"}
-    Application.delete_env(:elastix, :poison_options)
+    Application.delete_env(:rubber, :poison_options)
   end
 
   test "adding custom headers" do
-    Application.put_env(:elastix, :custom_headers, {__MODULE__, :add_custom_headers, [:foo]})
-    Application.put_env(:elastix, :test_request_mfa, {__MODULE__, :return_headers, []})
+    Application.put_env(:rubber, :custom_headers, {__MODULE__, :add_custom_headers, [:foo]})
+    Application.put_env(:rubber, :test_request_mfa, {__MODULE__, :return_headers, []})
     fake_resp = HTTP.request("GET", "#{@test_url}/_cluster/health", "", [{"yolo", "true"}])
-    Application.delete_env(:elastix, :test_request_mfa)
-    Application.delete_env(:elastix, :custom_headers)
+    Application.delete_env(:rubber, :test_request_mfa)
+    Application.delete_env(:rubber, :custom_headers)
     assert {"yolo", "true"} in fake_resp
     assert {"test", "pass"} in fake_resp
     assert {"Content-Type", "application/json; charset=UTF-8"} in fake_resp

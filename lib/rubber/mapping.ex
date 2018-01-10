@@ -1,8 +1,8 @@
-defmodule Elastix.Mapping do
+defmodule Rubber.Mapping do
   @moduledoc """
   """
-  import Elastix.HTTP, only: [prepare_url: 2]
-  alias Elastix.HTTP
+  import Rubber.HTTP, only: [prepare_url: 2]
+  alias Rubber.HTTP
 
   @doc false
   def put(elastic_url, index_names, type_name, data) when is_list(index_names) do

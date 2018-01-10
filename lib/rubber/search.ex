@@ -1,8 +1,8 @@
-defmodule Elastix.Search do
+defmodule Rubber.Search do
   @moduledoc """
   """
-  import Elastix.HTTP, only: [prepare_url: 2]
-  alias Elastix.HTTP
+  import Rubber.HTTP, only: [prepare_url: 2]
+  alias Rubber.HTTP
 
   @doc false
   def search(elastic_url, index, types, data) do

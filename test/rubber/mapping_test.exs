@@ -1,12 +1,12 @@
-defmodule Elastix.MappingTest do
+defmodule Rubber.MappingTest do
   use ExUnit.Case
-  alias Elastix.Index
-  alias Elastix.Mapping
-  alias Elastix.Document
+  alias Rubber.Index
+  alias Rubber.Mapping
+  alias Rubber.Document
 
-  @test_url Elastix.config(:test_url)
-  @test_index Elastix.config(:test_index)
-  @test_index2 Elastix.config(:test_index) <> "_2"
+  @test_url Rubber.config(:test_url)
+  @test_index Rubber.config(:test_index)
+  @test_index2 Rubber.config(:test_index) <> "_2"
   @mapping %{
     properties: %{
       user: %{type: "integer"},
@@ -34,7 +34,7 @@ defmodule Elastix.MappingTest do
 
   defp elasticsearch_version do
     %HTTPoison.Response{body: %{"version" => %{"number" => v}}, status_code: 200}
-      = Elastix.HTTP.get!(@test_url)
+      = Rubber.HTTP.get!(@test_url)
 
     v |> String.split([".", "-"]) |> Enum.take(3) |> Enum.map(&String.to_integer/1) |> List.to_tuple
   end

@@ -1,10 +1,10 @@
-# Elastix: Reloaded [![Build Status](https://travis-ci.org/evuez/elastix-reloaded.svg?branch=master)](https://travis-ci.org/evuez/elastix-reloaded)
+# Rubber [![Build Status](https://travis-ci.org/evuez/rubber.svg?branch=master)](https://travis-ci.org/evuez/rubber)
 
-A simple Elastic REST client written in Elixir.
+A simple Elastic client written in Elixir.
 
 [elastix](https://github.com/werbitzky/elastix) doesn't seem to be maintained anymore so I'll try to keep this fork up-to-date.
 
-Even though the package (and this repo) use the name `elastix-reloaded` the app and top module are still named `[eE]lastix`.
+I started off with `elastic-reloaded` for the name but then it got annoying because I wanted some consistency between the package name, the app name and the top module name so now it's `Rubber` everywhere.
 
 ## Preface
 
@@ -191,7 +191,7 @@ $ docker run -p 9200:9200 -it --rm elasticsearch:5.1.2
 Then clone the repo and fetch its dependencies:
 
 ```
-$ git clone git@github.com:evuez/elastix-reloaded.git
+$ git clone git@github.com:evuez/rubber.git
 $ cd elastix
 $ mix deps.get
 $ mix test
@@ -200,4 +200,4 @@ $ mix test
 ## License
 
 [elastix](https://github.com/werbitzky/elastix) was first licensed under the WTFPL by El Werbitzky <werbitzky@gmail.com>.
-elastic-*reloaded* is now distributed under the MIT License.
+Rubber is now distributed under the MIT License.

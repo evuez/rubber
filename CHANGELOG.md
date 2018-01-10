@@ -4,6 +4,10 @@
 
   - Add `count` to the Search module
 
+### Breaking Changes
+
+  - Rename Elastix to Rubber and did the same for the app name
+
 ## 0.5.1
 
 ### Improvements

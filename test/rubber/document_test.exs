@@ -1,10 +1,10 @@
-defmodule Elastix.DocumentTest do
+defmodule Rubber.DocumentTest do
   require Logger
   use ExUnit.Case
-  alias Elastix.{Document,Index,Search}
+  alias Rubber.{Document,Index,Search}
 
-  @test_url Elastix.config(:test_url)
-  @test_index Elastix.config(:test_index)
+  @test_url Rubber.config(:test_url)
+  @test_index Rubber.config(:test_index)
   @data %{
     user: "örelbörel",
     post_date: "2009-11-15T14:12:12",

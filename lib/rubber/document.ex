@@ -1,8 +1,8 @@
-defmodule Elastix.Document do
+defmodule Rubber.Document do
   @moduledoc """
   """
-  import Elastix.HTTP, only: [prepare_url: 2]
-  alias Elastix.HTTP
+  import Rubber.HTTP, only: [prepare_url: 2]
+  alias Rubber.HTTP
 
   @doc false
   def index(elastic_url, index_name, type_name, id, data) do
