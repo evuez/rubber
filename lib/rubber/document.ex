@@ -1,5 +1,6 @@
 defmodule Rubber.Document do
   @moduledoc """
+  [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
   alias Rubber.HTTP

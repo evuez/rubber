@@ -1,5 +1,6 @@
 defmodule Rubber.HTTP do
   @moduledoc """
+  A thin [HTTPoison](https://github.com/edgurgel/httpoison) wrapper.
   """
   use HTTPoison.Base
 
