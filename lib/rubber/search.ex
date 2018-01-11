@@ -1,5 +1,7 @@
 defmodule Rubber.Search do
   @moduledoc """
+  The search APIs are used to query indices.
+
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
@@ -22,7 +24,10 @@ defmodule Rubber.Search do
   def search(elastic_url, index, types, data),
     do: search(elastic_url, index, types, data, [])
 
-  @doc false
+  @doc """
+  Same as `search/4` but allows to specify query params and options for
+  [`HTTPoison.request/5`](https://hexdocs.pm/httpoison/HTTPoison.html#request/5).
+  """
   def search(elastic_url, index, types, data, query_params, options \\ [])
   def search(elastic_url, index, types, data, query_params, options)
       when is_list(data) do

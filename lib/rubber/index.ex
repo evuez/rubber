@@ -1,5 +1,7 @@
 defmodule Rubber.Index do
   @moduledoc """
+  The indices APIs are used to manage individual indices, index settings, aliases, mappings, and index templates.
+
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]

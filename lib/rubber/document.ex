@@ -1,5 +1,7 @@
 defmodule Rubber.Document do
   @moduledoc """
+  The document APIs expose CRUD operations on documents.
+
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]

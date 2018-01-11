@@ -6,20 +6,14 @@ A DSL-free Elasticsearch client written in Elixir.
 
 I started off with `elastic-reloaded` for the name but then it got annoying because I wanted some consistency between the package name, the app name and the top module name so now it's `Rubber` everywhere.
 
-## Preface
+## Documentation
 
-* [Latest Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+* [Documentation on hexdocs.pm](https://hexdocs.pm/rubber/)
+* [Latest Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
-This library talks to the Elasticsearch server through the HTTP API.
-Most of its functions return an [HTTPoison](https://github.com/edgurgel/httpoison) request object.
+Even though the [documentation](https://hexdocs.pm/rubber/) is pretty scarce right now, I'm working on improving it. Also if you want to help with that you're definitely welcome 🤗
 
-When needed, the payload can be provided as an Elixir Map, which is internally converted to JSON. The library does not assume anything else regarding the payload and doesn't validate it before sending it to Elasticsearch.
-
-## Overview
-
-Rubber has 6 modules, 5 of them match the Elasticsearch API (`Index`, `Document`, `Search`, `Bulk` and `Mapping`) and the last module `HTTP` is meant for any request that can't be done with any of the aforementioned module.
-
-Checkout their respective documentation for more information.
+This README contains most of the information you should need to get started, if you can't find what you're looking for, either look at the tests or file an issue!
 
 ## Installation
 

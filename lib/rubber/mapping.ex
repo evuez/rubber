@@ -1,5 +1,7 @@
 defmodule Rubber.Mapping do
   @moduledoc """
+  The mapping API is used to define how documents are stored and indexed.
+
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
