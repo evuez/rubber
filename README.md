@@ -1,4 +1,4 @@
-# Rubber [![Build Status](https://travis-ci.org/evuez/rubber.svg?branch=master)](https://travis-ci.org/evuez/rubber)
+# Rubber [![Build Status](https://travis-ci.org/evuez/rubber.svg?branch=master)](https://travis-ci.org/evuez/rubber) [![Hex.pm](https://img.shields.io/hexpm/v/rubber.svg)](https://hex.pm/packages/rubber)
 
 A DSL-free Elasticsearch client written in Elixir.
 
@@ -21,9 +21,11 @@ Add `rubber` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:rubber, "~> 0.6"}]
+  [{:rubber, ">= 0.0.0"}]
 end
 ```
+
+Then run `mix deps.get` to fetch the new dependency.
 
 ## Examples
 
