@@ -6,19 +6,27 @@ defmodule Rubber.Bulk do
   alias Rubber.HTTP
 
   def post(elastic_url, lines, options \\ [], query_params \\ []) do
+    data = Enum.reduce(lines, [], fn l, acc -> ["\n", Poison.encode!(l) | acc] end)
+           |> Enum.reverse()
+           |> IO.iodata_to_binary()
+
+    path = Keyword.get(options, :index)
+           |> make_path(Keyword.get(options, :type), query_params)
+
     elastic_url
-    |> prepare_url(make_path(
-      Keyword.get(options, :index), Keyword.get(options, :type), query_params))
-    |> HTTP.put(
-      Enum.reduce(
-        lines, "",
-        fn (line, payload) -> payload <> Poison.encode!(line) <> "\n" end))
+    |> prepare_url(path)
+    |> HTTP.put(data)
   end
 
+  @doc """
+  Deprecated: use `post/4` instead.
+  """
   def post_to_iolist(elastic_url, lines, options \\ [], query_params \\ []) do
+    IO.warn "This function is deprecated and will be removed in future releases; use Rubber.Bulk.post/4 instead."
+
     elastic_url <> make_path(
       Keyword.get(options, :index), Keyword.get(options, :type), query_params)
-    |> HTTP.put(Enum.map(lines, fn line -> Poison.encode!(line) <> "\n" end))
+      |> HTTP.put(Enum.map(lines, fn line -> Poison.encode!(line) <> "\n" end))
   end
 
   @doc false

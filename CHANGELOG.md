@@ -3,6 +3,7 @@
 ### Improvements
 
   - Allow to use the `_msearch` endpoint via `Rubber.Search.search`.
+  - Deprecate `Rubber.Bulk.post_to_iolist/4` as `Rubber.Bulk.post` does mostly the same thing
 
 ## 0.6.0
 
