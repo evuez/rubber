@@ -1,3 +1,9 @@
+## 0.7.0
+
+### Improvements
+
+  - Allow to use the `_msearch` endpoint via `Rubber.Search.search`.
+
 ## 0.6.0
 
 ### Improvements

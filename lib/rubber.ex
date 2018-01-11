@@ -1,8 +1,5 @@
 defmodule Rubber do
-  @moduledoc """
-  A module that provides a simple Interface to communicate with
-  an Elastic server via REST.
-  """
+  @moduledoc false
 
   @doc false
   def start do

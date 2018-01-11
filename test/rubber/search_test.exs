@@ -54,6 +54,16 @@ defmodule Rubber.SearchTest do
       Search.search @test_url, @test_index, [], @query_data, [], recv_timeout: 0
   end
 
+  test "search accepts a list of requests" do
+    Document.index @test_url, @test_index, "message", 1, @document_data, [refresh: true]
+    Document.index @test_url, @test_index, "message", 2, @document_data, [refresh: true]
+
+    {:ok, response} = Search.search @test_url, @test_index, [], [%{}, @query_data, %{}, @query_data]
+
+    assert [_first, _second] = response.body["responses"]
+    assert response.status_code == 200
+  end
+
   test "can scroll through all documents" do
     for i <- 1..10,
       do: Document.index @test_url, @test_index, "message", i, @document_data, [refresh: true]

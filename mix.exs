@@ -1,13 +1,13 @@
 defmodule Rubber.Mixfile do
   use Mix.Project
 
-  @version "0.6.0"
+  @version "0.7.0"
 
   def project do
     [app: :rubber,
      version: @version,
      elixir: "~> 1.0",
-     description: "A simple Elasticsearch REST client written in Elixir.",
+     description: "A DSL-free Elasticsearch client written in Elixir.",
      package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

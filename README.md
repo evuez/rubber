@@ -1,6 +1,6 @@
 # Rubber [![Build Status](https://travis-ci.org/evuez/rubber.svg?branch=master)](https://travis-ci.org/evuez/rubber)
 
-A simple Elastic client written in Elixir.
+A DSL-free Elasticsearch client written in Elixir.
 
 [elastix](https://github.com/werbitzky/elastix) doesn't seem to be maintained anymore so I'll try to keep this fork up-to-date.
 
@@ -8,7 +8,7 @@ I started off with `elastic-reloaded` for the name but then it got annoying beca
 
 ## Preface
 
-* [Latest Elastic docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+* [Latest Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 This library talks to the Elasticsearch server through the HTTP API.
 Most of its functions return an [HTTPoison](https://github.com/edgurgel/httpoison) request object.
@@ -33,7 +33,7 @@ end
 
 ## Examples
 
-### Creating an Elastic index
+### Creating an Elasticsearch index
 
 ```elixir
 Rubber.Index.create("http://127.0.0.1:9200", "sample_index_name", %{})

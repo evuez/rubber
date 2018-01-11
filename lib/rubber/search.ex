@@ -5,13 +5,36 @@ defmodule Rubber.Search do
   import Rubber.HTTP, only: [prepare_url: 2]
   alias Rubber.HTTP
 
-  @doc false
-  def search(elastic_url, index, types, data) do
-    search(elastic_url, index, types, data, [])
-  end
+  @doc """
+  Makes a request to the `_search` or the `_msearch` endpoint depending on the type of
+  `data`.
+
+  When passing a map for data, it'll make a simple search, but you can pass a list of
+  header and body params to make a [multi search](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html).
+
+  ## Examples
+
+      iex> Rubber.Search.search("http://localhost:9200", "twitter", "tweet", %{query: %{term: %{user: "kimchy"}}})
+      {:ok, %HTTPoison.Response{...}}
+  """
+  def search(elastic_url, index, types, data) when is_list(data),
+    do: search(elastic_url, index, types, data, [])
+  def search(elastic_url, index, types, data),
+    do: search(elastic_url, index, types, data, [])
 
   @doc false
-  def search(elastic_url, index, types, data, query_params, options \\ []) do
+  def search(elastic_url, index, types, data, query_params, options \\ [])
+  def search(elastic_url, index, types, data, query_params, options)
+      when is_list(data) do
+
+    data = Enum.reduce(data, [], fn d, acc -> ["\n", Poison.encode!(d) | acc] end)
+           |> Enum.reverse()
+           |> IO.iodata_to_binary()
+
+    prepare_url(elastic_url, make_path(index, types, query_params, "_msearch"))
+    |> HTTP.post(data, [], options)
+  end
+  def search(elastic_url, index, types, data, query_params, options) do
     prepare_url(elastic_url, make_path(index, types, query_params))
     |> HTTP.post(Poison.encode!(data), [], options)
   end
@@ -23,9 +46,8 @@ defmodule Rubber.Search do
   end
 
   @doc false
-  def count(elastic_url, index, types, data) do
-    count(elastic_url, index, types, data, [])
-  end
+  def count(elastic_url, index, types, data),
+    do: count(elastic_url, index, types, data, [])
 
   @doc false
   def count(elastic_url, index, types, data, query_params, options \\ []) do
