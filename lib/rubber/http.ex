@@ -51,6 +51,17 @@ defmodule Rubber.HTTP do
     end
   end
 
+  @doc """
+  Encodes an enumerable (`params`) into a query string and appends it to `root`.
+
+  ## Examples
+
+      iex> Rubber.HTTP.append_query_string("/path", %{a: 1, b: 2})
+      "/path?a=1&b=2"
+  """
+  @spec append_query_string(String.t, term()) :: String.t
+  def append_query_string(root, params), do: "#{root}?#{URI.encode_query(params)}"
+
   defp poison_options do
     Rubber.config(:poison_options, [])
   end

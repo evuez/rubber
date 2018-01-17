@@ -102,7 +102,7 @@ defmodule Rubber.Mapping do
 
     case query_params do
       [] -> path
-      _ -> add_query_params(path, query_params)
+      _ -> HTTP.append_query_string(path, query_params)
     end
   end
 
@@ -112,7 +112,7 @@ defmodule Rubber.Mapping do
 
     case query_params do
       [] -> path
-      _ -> add_query_params(path, query_params)
+      _ -> HTTP.append_query_string(path, query_params)
     end
   end
 
@@ -124,16 +124,7 @@ defmodule Rubber.Mapping do
 
     case query_params do
       [] -> path
-      _ -> add_query_params(path, query_params)
+      _ -> HTTP.append_query_string(path, query_params)
     end
-  end
-
-  @doc false
-  defp add_query_params(path, query_params) do
-    query_string = Enum.map_join query_params, "&", fn(param) ->
-      "#{elem(param, 0)}=#{elem(param, 1)}"
-    end
-
-    "#{path}?#{query_string}"
   end
 end

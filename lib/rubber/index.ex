@@ -76,6 +76,11 @@ defmodule Rubber.Index do
   @doc """
   Forces the [refresh](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html)
   of the specified index.
+
+  ## Examples
+
+      iex> Rubber.Index.refresh("http://localhost:9200", "twitter")
+      {:ok, %HTTPoison.Response{...}}
   """
   @spec refresh(elastic_url :: String.t, name :: String.t) :: HTTP.resp
   def refresh(elastic_url, name) do

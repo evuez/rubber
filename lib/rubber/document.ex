@@ -76,7 +76,7 @@ defmodule Rubber.Document do
       |> Enum.filter(fn v -> v end) # Filter out nils.
       |> Enum.join("/")
     url = prepare_url(elastic_url, [path, "_mget"])
-      |> add_query_params(query_params)
+      |> HTTP.append_query_string(query_params)
 
     # HTTPoison does not provide an API for a GET request with a body.
     HTTP.request(:get, url, Poison.encode!(query))
@@ -110,7 +110,7 @@ defmodule Rubber.Document do
                         query_params :: Keyword.t) :: HTTP.resp
   def delete_matching(elastic_url, index_name, %{} = query, query_params \\ []) do
     prepare_url(elastic_url, [index_name, "_delete_by_query"])
-    |> add_query_params(query_params)
+    |> HTTP.append_query_string(query_params)
     |> HTTP.post(Poison.encode!(query))
   end
 
@@ -137,22 +137,12 @@ defmodule Rubber.Document do
   @doc false
   def make_path(index_name, type_name, query_params) do
     "/#{index_name}/#{type_name}"
-    |> add_query_params(query_params)
+    |> HTTP.append_query_string(query_params)
   end
 
   @doc false
   def make_path(index_name, type_name, query_params, id, suffix \\ nil) do
     "/#{index_name}/#{type_name}/#{id}/#{suffix}"
-    |> add_query_params(query_params)
-  end
-
-  @doc false
-  defp add_query_params(path, []), do: path
-  defp add_query_params(path, query_params) do
-    query_string = Enum.map_join query_params, "&", fn(param) ->
-      "#{elem(param, 0)}=#{elem(param, 1)}"
-    end
-
-    "#{path}?#{query_string}"
+    |> HTTP.append_query_string(query_params)
   end
 end

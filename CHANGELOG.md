@@ -1,3 +1,9 @@
+## 0.7.1
+
+### Improvements
+
+  - Improve documentation and add specs to public functions
+
 ## 0.7.0
 
 ### Improvements
