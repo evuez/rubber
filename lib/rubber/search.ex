@@ -16,9 +16,13 @@ defmodule Rubber.Search do
 
   ## Examples
 
-      iex> Rubber.Search.search("http://localhost:9200", "twitter", "tweet", %{query: %{term: %{user: "kimchy"}}})
+      iex> Rubber.Search.search("http://localhost:9200", "twitter", ["tweet"], %{query: %{term: %{user: "kimchy"}}})
       {:ok, %HTTPoison.Response{...}}
   """
+  @spec search(elastic_url :: String.t,
+               index :: String.t,
+               types :: list,
+               data :: map | list) :: HTTP.resp
   def search(elastic_url, index, types, data) when is_list(data),
     do: search(elastic_url, index, types, data, [])
   def search(elastic_url, index, types, data),
@@ -28,6 +32,12 @@ defmodule Rubber.Search do
   Same as `search/4` but allows to specify query params and options for
   [`HTTPoison.request/5`](https://hexdocs.pm/httpoison/HTTPoison.html#request/5).
   """
+  @spec search(elastic_url :: String.t,
+               index :: String.t,
+               types :: list,
+               data :: map | list,
+               query_params :: Keyword.t,
+               options :: Keyword.t) :: HTTP.resp
   def search(elastic_url, index, types, data, query_params, options \\ [])
   def search(elastic_url, index, types, data, query_params, options)
       when is_list(data) do
@@ -44,17 +54,47 @@ defmodule Rubber.Search do
     |> HTTP.post(Poison.encode!(data), [], options)
   end
 
-  @doc false
+  @doc """
+  Uses the [Scroll API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html)
+  to allow scrolling through a list of results.
+
+  ## Examples
+
+      iex> Rubber.Search.scroll("http://localhost:9200", %{query: %{term: %{user: "kimchy"}}})
+      {:ok, %HTTPoison.Response{...}}
+  """
+  @spec scroll(elastic_url :: String.t, data :: map, options :: Keyword.t) :: HTTP.resp
   def scroll(elastic_url, data, options \\ []) do
     prepare_url(elastic_url, "_search/scroll")
     |> HTTP.post(Poison.encode!(data), [], options)
   end
 
-  @doc false
+  @doc """
+  Returns the number of results for a query using the
+  [Count API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html).
+
+  ## Examples
+
+      iex> Rubber.Search.count("http://localhost:9200", "twitter", ["tweet"], %{query: %{term: %{user: "kimchy"}}})
+      {:ok, %HTTPoison.Response{...}}
+  """
+  @spec count(elastic_url :: String.t,
+              index :: String.t,
+              types :: list,
+              data :: map) :: HTTP.resp
   def count(elastic_url, index, types, data),
     do: count(elastic_url, index, types, data, [])
 
-  @doc false
+  @doc """
+  Same as `count/4` but allows to specify query params and options for
+  [`HTTPoison.request/5`](https://hexdocs.pm/httpoison/HTTPoison.html#request/5).
+  """
+  @spec count(elastic_url :: String.t,
+              index :: String.t,
+              types :: list,
+              data :: map,
+              query_params :: Keyword.t,
+              options :: Keyword.t) :: HTTP.resp
   def count(elastic_url, index, types, data, query_params, options \\ []) do
     elastic_url <> make_path(index, types, query_params, "_count")
     |> HTTP.post(Poison.encode!(data), [], options)

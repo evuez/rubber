@@ -1,6 +1,6 @@
 # Rubber [![Build Status](https://travis-ci.org/evuez/rubber.svg?branch=master)](https://travis-ci.org/evuez/rubber) [![Hex.pm](https://img.shields.io/hexpm/v/rubber.svg)](https://hex.pm/packages/rubber)
 
-A DSL-free Elasticsearch client written in Elixir.
+A DSL-free Elasticsearch client written in Elixir (backward-compatible with [elastix](https://github.com/werbitzky/elastix) v0.5.0).
 
 [elastix](https://github.com/werbitzky/elastix) doesn't seem to be maintained anymore so I'll try to keep this fork up-to-date.
 
@@ -32,13 +32,13 @@ Then run `mix deps.get` to fetch the new dependency.
 ### Creating an Elasticsearch index
 
 ```elixir
-Rubber.Index.create("http://127.0.0.1:9200", "sample_index_name", %{})
+Rubber.Index.create("http://localhost:9200", "twitter", %{})
 ```
 
 ### Map, Index, Search and Delete
 
 ```elixir
-elastic_url = "http://127.0.0.1:9200"
+elastic_url = "http://localhost:9200"
 
 data = %{
     user: "kimchy",
@@ -55,9 +55,9 @@ mapping = %{
 }
 
 Rubber.Mapping.put(elastic_url, "twitter", "tweet", mapping)
-Rubber.Document.index(elastic_url, "twitter", "tweet", product.id, data)
+Rubber.Document.index(elastic_url, "twitter", "tweet", "42", data)
 Rubber.Search.search(elastic_url, "twitter", ["tweet"], %{})
-Rubber.Document.delete(elastic_url, "twitter", "tweet", product.id)
+Rubber.Document.delete(elastic_url, "twitter", "tweet", "42")
 ```
 
 ### Bulk requests

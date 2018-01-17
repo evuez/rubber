@@ -4,6 +4,8 @@ defmodule Rubber.HTTP do
   """
   use HTTPoison.Base
 
+  @type resp :: {:ok, HTTPoison.Response.t} | {:error, HTTPoison.Error.t}
+
   @doc false
   def prepare_url(url, path) when is_binary(path),
     do: URI.merge(url, path) |> to_string
