@@ -19,12 +19,15 @@ defmodule Rubber.Search do
       iex> Rubber.Search.search("http://localhost:9200", "twitter", ["tweet"], %{query: %{term: %{user: "kimchy"}}})
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec search(elastic_url :: String.t,
-               index :: String.t,
-               types :: list,
-               data :: map | list) :: HTTP.resp
+  @spec search(
+          elastic_url :: String.t(),
+          index :: String.t(),
+          types :: list,
+          data :: map | list
+        ) :: HTTP.resp()
   def search(elastic_url, index, types, data) when is_list(data),
     do: search(elastic_url, index, types, data, [])
+
   def search(elastic_url, index, types, data),
     do: search(elastic_url, index, types, data, [])
 
@@ -32,23 +35,27 @@ defmodule Rubber.Search do
   Same as `search/4` but allows to specify query params and options for
   [`HTTPoison.request/5`](https://hexdocs.pm/httpoison/HTTPoison.html#request/5).
   """
-  @spec search(elastic_url :: String.t,
-               index :: String.t,
-               types :: list,
-               data :: map | list,
-               query_params :: Keyword.t,
-               options :: Keyword.t) :: HTTP.resp
+  @spec search(
+          elastic_url :: String.t(),
+          index :: String.t(),
+          types :: list,
+          data :: map | list,
+          query_params :: Keyword.t(),
+          options :: Keyword.t()
+        ) :: HTTP.resp()
   def search(elastic_url, index, types, data, query_params, options \\ [])
+
   def search(elastic_url, index, types, data, query_params, options)
       when is_list(data) do
-
-    data = Enum.reduce(data, [], fn d, acc -> ["\n", Poison.encode!(d) | acc] end)
-           |> Enum.reverse()
-           |> IO.iodata_to_binary()
+    data =
+      Enum.reduce(data, [], fn d, acc -> ["\n", Poison.encode!(d) | acc] end)
+      |> Enum.reverse()
+      |> IO.iodata_to_binary()
 
     prepare_url(elastic_url, make_path(index, types, query_params, "_msearch"))
     |> HTTP.post(data, [], options)
   end
+
   def search(elastic_url, index, types, data, query_params, options) do
     prepare_url(elastic_url, make_path(index, types, query_params))
     |> HTTP.post(Poison.encode!(data), [], options)
@@ -63,7 +70,8 @@ defmodule Rubber.Search do
       iex> Rubber.Search.scroll("http://localhost:9200", %{query: %{term: %{user: "kimchy"}}})
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec scroll(elastic_url :: String.t, data :: map, options :: Keyword.t) :: HTTP.resp
+  @spec scroll(elastic_url :: String.t(), data :: map, options :: Keyword.t()) ::
+          HTTP.resp()
   def scroll(elastic_url, data, options \\ []) do
     prepare_url(elastic_url, "_search/scroll")
     |> HTTP.post(Poison.encode!(data), [], options)
@@ -78,10 +86,8 @@ defmodule Rubber.Search do
       iex> Rubber.Search.count("http://localhost:9200", "twitter", ["tweet"], %{query: %{term: %{user: "kimchy"}}})
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec count(elastic_url :: String.t,
-              index :: String.t,
-              types :: list,
-              data :: map) :: HTTP.resp
+  @spec count(elastic_url :: String.t(), index :: String.t(), types :: list, data :: map) ::
+          HTTP.resp()
   def count(elastic_url, index, types, data),
     do: count(elastic_url, index, types, data, [])
 
@@ -89,14 +95,16 @@ defmodule Rubber.Search do
   Same as `count/4` but allows to specify query params and options for
   [`HTTPoison.request/5`](https://hexdocs.pm/httpoison/HTTPoison.html#request/5).
   """
-  @spec count(elastic_url :: String.t,
-              index :: String.t,
-              types :: list,
-              data :: map,
-              query_params :: Keyword.t,
-              options :: Keyword.t) :: HTTP.resp
+  @spec count(
+          elastic_url :: String.t(),
+          index :: String.t(),
+          types :: list,
+          data :: map,
+          query_params :: Keyword.t(),
+          options :: Keyword.t()
+        ) :: HTTP.resp()
   def count(elastic_url, index, types, data, query_params, options \\ []) do
-    elastic_url <> make_path(index, types, query_params, "_count")
+    (elastic_url <> make_path(index, types, query_params, "_count"))
     |> HTTP.post(Poison.encode!(data), [], options)
   end
 
@@ -104,10 +112,11 @@ defmodule Rubber.Search do
   def make_path(index, types, query_params, api_type \\ "_search") do
     path_root = "/#{index}"
 
-    path = case types do
-      [] -> path_root
-      _ -> path_root <> "/" <> Enum.join types, ","
-    end
+    path =
+      case types do
+        [] -> path_root
+        _ -> path_root <> "/" <> Enum.join(types, ",")
+      end
 
     full_path = "#{path}/#{api_type}"
 

@@ -15,7 +15,7 @@ defmodule Rubber.Index do
       iex> Rubber.Index.create("http://localhost:9200", "twitter", %{})
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec create(elastic_url :: String.t, name :: String.t, data :: map) :: HTTP.resp
+  @spec create(elastic_url :: String.t(), name :: String.t(), data :: map) :: HTTP.resp()
   def create(elastic_url, name, data) do
     prepare_url(elastic_url, name)
     |> HTTP.put(Poison.encode!(data))
@@ -29,10 +29,10 @@ defmodule Rubber.Index do
       iex> Rubber.Index.delete("http://localhost:9200", "twitter")
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec delete(elastic_url :: String.t, name :: String.t) :: HTTP.resp
+  @spec delete(elastic_url :: String.t(), name :: String.t()) :: HTTP.resp()
   def delete(elastic_url, name) do
     prepare_url(elastic_url, name)
-    |> HTTP.delete
+    |> HTTP.delete()
   end
 
   @doc """
@@ -43,10 +43,10 @@ defmodule Rubber.Index do
       iex> Rubber.Index.get("http://localhost:9200", "twitter")
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec get(elastic_url :: String.t, name :: String.t) :: HTTP.resp
+  @spec get(elastic_url :: String.t(), name :: String.t()) :: HTTP.resp()
   def get(elastic_url, name) do
     prepare_url(elastic_url, name)
-    |> HTTP.get
+    |> HTTP.get()
   end
 
   @doc """
@@ -61,15 +61,17 @@ defmodule Rubber.Index do
       iex> Rubber.Index.exists?("http://localhost:9200", "twitter")
       {:ok, true}
   """
-  @spec exists?(elastic_url :: String.t, name :: String.t) :: HTTP.resp
+  @spec exists?(elastic_url :: String.t(), name :: String.t()) :: HTTP.resp()
   def exists?(elastic_url, name) do
-    case prepare_url(elastic_url, name) |> HTTP.head do
+    case prepare_url(elastic_url, name) |> HTTP.head() do
       {:ok, response} ->
         case response.status_code do
           200 -> {:ok, true}
           404 -> {:ok, false}
         end
-      err -> err
+
+      err ->
+        err
     end
   end
 
@@ -82,7 +84,7 @@ defmodule Rubber.Index do
       iex> Rubber.Index.refresh("http://localhost:9200", "twitter")
       {:ok, %HTTPoison.Response{...}}
   """
-  @spec refresh(elastic_url :: String.t, name :: String.t) :: HTTP.resp
+  @spec refresh(elastic_url :: String.t(), name :: String.t()) :: HTTP.resp()
   def refresh(elastic_url, name) do
     prepare_url(elastic_url, [name, "_refresh"])
     |> HTTP.post("")

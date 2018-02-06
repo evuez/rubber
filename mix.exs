@@ -4,15 +4,17 @@ defmodule Rubber.Mixfile do
   @version "0.7.1"
 
   def project do
-    [app: :rubber,
-     version: @version,
-     elixir: "~> 1.0",
-     description: "A DSL-free Elasticsearch client written in Elixir.",
-     package: package(),
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     aliases: aliases(),
-     deps: deps()]
+    [
+      app: :rubber,
+      version: @version,
+      elixir: "~> 1.0",
+      description: "A DSL-free Elasticsearch client written in Elixir.",
+      package: package(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
+      deps: deps()
+    ]
   end
 
   # Configuration for the OTP application
@@ -32,21 +34,25 @@ defmodule Rubber.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:ex_doc, "~> 0.14", only: :dev},
-     {:credo, "~> 0.6", only: [:dev, :test]},
-     {:mix_test_watch, "~> 0.3", only: [:test, :dev]},
-     {:poison, "~> 3.1"},
-     {:httpoison, ">= 0.7.0"}]
+    [
+      {:ex_doc, "~> 0.14", only: :dev},
+      {:credo, "~> 0.6", only: [:dev, :test]},
+      {:mix_test_watch, "~> 0.3", only: [:test, :dev]},
+      {:poison, "~> 3.1"},
+      {:httpoison, ">= 0.7.0"}
+    ]
   end
 
   defp package do
-    [files: ["lib", "mix.exs", "README.md"],
-     maintainers: ["evuez <helloevuez@gmail.com>"],
-     licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/evuez/rubber"}]
+    [
+      files: ["lib", "mix.exs", "README.md"],
+      maintainers: ["evuez <helloevuez@gmail.com>"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/evuez/rubber"}
+    ]
   end
 
   defp aliases do
-    ["compile": ["compile --warnings-as-errors"]]
+    [compile: ["compile --warnings-as-errors"]]
   end
 end
