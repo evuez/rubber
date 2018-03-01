@@ -9,6 +9,8 @@ elixir:
 services:
   - elasticsearch
 before_script:
+  - 'echo "path.repo: /tmp" | sudo tee -a /etc/elasticsearch/elasticsearch.yml'
+  - 'sudo service elasticsearch restart'
   - mix credo --strict
 script: "mix test"
 notifications:

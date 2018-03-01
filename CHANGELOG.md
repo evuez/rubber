@@ -1,3 +1,10 @@
+## 0.8.0
+
+### Improvements
+
+  - Add functions to handle snapshots
+  - Add `open` and `close` to the Index module
+
 ## 0.7.1
 
 ### Improvements
