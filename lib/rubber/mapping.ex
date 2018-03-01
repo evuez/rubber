@@ -5,7 +5,7 @@ defmodule Rubber.Mapping do
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Creates a new mapping.
@@ -28,7 +28,7 @@ defmodule Rubber.Mapping do
   def put(elastic_url, index_names, type_name, data, query_params)
       when is_list(index_names) do
     prepare_url(elastic_url, make_path(index_names, [type_name], query_params))
-    |> HTTP.put(Poison.encode!(data))
+    |> HTTP.put(JSON.encode!(data))
   end
 
   def put(elastic_url, index_name, type_name, data, query_params),

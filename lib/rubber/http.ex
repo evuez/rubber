@@ -3,6 +3,7 @@ defmodule Rubber.HTTP do
   A thin [HTTPoison](https://github.com/edgurgel/httpoison) wrapper.
   """
   use HTTPoison.Base
+  alias Rubber.JSON
 
   @type resp :: {:ok, HTTPoison.Response.t()} | {:error, HTTPoison.Error.t()}
 
@@ -48,7 +49,7 @@ defmodule Rubber.HTTP do
   def process_response_body(""), do: ""
 
   def process_response_body(body) do
-    case body |> to_string |> Poison.decode(poison_options()) do
+    case body |> to_string |> JSON.decode() do
       {:error, _} -> body
       {:ok, decoded} -> decoded
     end
@@ -64,10 +65,6 @@ defmodule Rubber.HTTP do
   """
   @spec append_query_string(String.t(), term()) :: String.t()
   def append_query_string(root, params), do: "#{root}?#{URI.encode_query(params)}"
-
-  defp poison_options do
-    Rubber.config(:poison_options, [])
-  end
 
   defp default_httpoison_options do
     Rubber.config(:httpoison_options, [])

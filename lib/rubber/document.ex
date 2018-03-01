@@ -5,7 +5,7 @@ defmodule Rubber.Document do
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   (Re)Indexes a document with the given `id`.
@@ -25,7 +25,7 @@ defmodule Rubber.Document do
         ) :: HTTP.resp()
   def index(elastic_url, index_name, type_name, id, data, query_params \\ []) do
     prepare_url(elastic_url, make_path(index_name, type_name, query_params, id))
-    |> HTTP.put(Poison.encode!(data))
+    |> HTTP.put(JSON.encode!(data))
   end
 
   @doc """
@@ -45,7 +45,7 @@ defmodule Rubber.Document do
         ) :: HTTP.resp()
   def index_new(elastic_url, index_name, type_name, data, query_params \\ []) do
     prepare_url(elastic_url, make_path(index_name, type_name, query_params))
-    |> HTTP.post(Poison.encode!(data))
+    |> HTTP.post(JSON.encode!(data))
   end
 
   @doc """
@@ -90,7 +90,7 @@ defmodule Rubber.Document do
       |> HTTP.append_query_string(query_params)
 
     # HTTPoison does not provide an API for a GET request with a body.
-    HTTP.request(:get, url, Poison.encode!(query))
+    HTTP.request(:get, url, JSON.encode!(query))
   end
 
   @doc """
@@ -126,7 +126,7 @@ defmodule Rubber.Document do
   def delete_matching(elastic_url, index_name, %{} = query, query_params \\ []) do
     prepare_url(elastic_url, [index_name, "_delete_by_query"])
     |> HTTP.append_query_string(query_params)
-    |> HTTP.post(Poison.encode!(query))
+    |> HTTP.post(JSON.encode!(query))
   end
 
   @doc """
@@ -148,7 +148,7 @@ defmodule Rubber.Document do
   def update(elastic_url, index_name, type_name, id, data, query_params \\ []) do
     elastic_url
     |> prepare_url(make_path(index_name, type_name, query_params, id, "_update"))
-    |> HTTP.post(Poison.encode!(data))
+    |> HTTP.post(JSON.encode!(data))
   end
 
   @doc false

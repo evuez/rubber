@@ -1,3 +1,9 @@
+## 0.9.0
+
+### Improvements
+
+  - Add a JSON wrapper module allowing to use any JSON codec library
+
 ## 0.8.0
 
 ### Improvements

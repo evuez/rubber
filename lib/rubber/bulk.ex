@@ -5,7 +5,7 @@ defmodule Rubber.Bulk do
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Excepts a list of actions and sources for the `lines` parameter.
@@ -23,7 +23,7 @@ defmodule Rubber.Bulk do
         ) :: HTTP.resp()
   def post(elastic_url, lines, options \\ [], query_params \\ []) do
     data =
-      Enum.reduce(lines, [], fn l, acc -> ["\n", Poison.encode!(l) | acc] end)
+      Enum.reduce(lines, [], fn l, acc -> ["\n", JSON.encode!(l) | acc] end)
       |> Enum.reverse()
       |> IO.iodata_to_binary()
 
@@ -52,7 +52,7 @@ defmodule Rubber.Bulk do
 
     (elastic_url <>
        make_path(Keyword.get(options, :index), Keyword.get(options, :type), query_params))
-    |> HTTP.put(Enum.map(lines, fn line -> Poison.encode!(line) <> "\n" end))
+    |> HTTP.put(Enum.map(lines, fn line -> JSON.encode!(line) <> "\n" end))
   end
 
   @doc """

@@ -95,13 +95,15 @@ config :rubber,
   password: "password",
 ```
 
-### [Poison](https://github.com/devinus/poison) and [HTTPoison](https://github.com/edgurgel/httpoison)
+### [Poison](https://github.com/devinus/poison) (or any other JSON library) and [HTTPoison](https://github.com/edgurgel/httpoison)
 
 ```elixir
 config :rubber,
-  poison_options: [keys: :atoms!],
+  json_options: [keys: :atoms!],
   httpoison_options: [hackney: [pool: :rubber_pool]]
 ```
+
+Note that you can configure Rubber to use any JSON library, see the ["Custom JSON codec" page](https://hexdocs.pm/rubber/custom-json-codec.html) for more info.
 
 ### Custom headers
 

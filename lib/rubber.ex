@@ -1,7 +1,8 @@
 defmodule Rubber do
   @moduledoc """
-  Rubber consists of several modules trying to match the Elasticsearch API and a
-  `Rubber.HTTP` module for raw requests.
+  Rubber consists of several modules trying to match the Elasticsearch API, a
+  `Rubber.HTTP` module for raw requests and a `Rubber.JSON` module that allows using a
+  custom JSON library.
 
     - `Rubber.Bulk` -- the [Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)
     - `Rubber.Document` -- the [Document API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html)

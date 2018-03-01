@@ -5,7 +5,7 @@ defmodule Rubber.Search do
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Makes a request to the `_search` or the `_msearch` endpoint depending on the type of
@@ -48,7 +48,7 @@ defmodule Rubber.Search do
   def search(elastic_url, index, types, data, query_params, options)
       when is_list(data) do
     data =
-      Enum.reduce(data, [], fn d, acc -> ["\n", Poison.encode!(d) | acc] end)
+      Enum.reduce(data, [], fn d, acc -> ["\n", JSON.encode!(d) | acc] end)
       |> Enum.reverse()
       |> IO.iodata_to_binary()
 
@@ -58,7 +58,7 @@ defmodule Rubber.Search do
 
   def search(elastic_url, index, types, data, query_params, options) do
     prepare_url(elastic_url, make_path(index, types, query_params))
-    |> HTTP.post(Poison.encode!(data), [], options)
+    |> HTTP.post(JSON.encode!(data), [], options)
   end
 
   @doc """
@@ -74,7 +74,7 @@ defmodule Rubber.Search do
           HTTP.resp()
   def scroll(elastic_url, data, options \\ []) do
     prepare_url(elastic_url, "_search/scroll")
-    |> HTTP.post(Poison.encode!(data), [], options)
+    |> HTTP.post(JSON.encode!(data), [], options)
   end
 
   @doc """
@@ -105,7 +105,7 @@ defmodule Rubber.Search do
         ) :: HTTP.resp()
   def count(elastic_url, index, types, data, query_params, options \\ []) do
     (elastic_url <> make_path(index, types, query_params, "_count"))
-    |> HTTP.post(Poison.encode!(data), [], options)
+    |> HTTP.post(JSON.encode!(data), [], options)
   end
 
   @doc false

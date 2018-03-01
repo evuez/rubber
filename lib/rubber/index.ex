@@ -5,7 +5,7 @@ defmodule Rubber.Index do
   [Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html)
   """
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Creates a new index.
@@ -18,7 +18,7 @@ defmodule Rubber.Index do
   @spec create(elastic_url :: String.t(), name :: String.t(), data :: map) :: HTTP.resp()
   def create(elastic_url, name, data) do
     prepare_url(elastic_url, name)
-    |> HTTP.put(Poison.encode!(data))
+    |> HTTP.put(JSON.encode!(data))
   end
 
   @doc """

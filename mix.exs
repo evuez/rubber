@@ -1,7 +1,7 @@
 defmodule Rubber.Mixfile do
   use Mix.Project
 
-  @version "0.8.0"
+  @version "0.9.0"
 
   def project do
     [
@@ -13,7 +13,9 @@ defmodule Rubber.Mixfile do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      name: "Rubber",
+      docs: docs()
     ]
   end
 
@@ -38,7 +40,7 @@ defmodule Rubber.Mixfile do
       {:ex_doc, "~> 0.14", only: :dev},
       {:credo, "~> 0.6", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.3", only: [:test, :dev]},
-      {:poison, "~> 3.1"},
+      {:poison, "~> 3.1", optional: true},
       {:httpoison, ">= 0.7.0"},
       {:retry, "~> 0.8"}
     ]
@@ -55,5 +57,12 @@ defmodule Rubber.Mixfile do
 
   defp aliases do
     [compile: ["compile --warnings-as-errors"]]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md", "pages/custom-json-codec.md"]
+    ]
   end
 end

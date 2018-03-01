@@ -6,7 +6,7 @@ defmodule Rubber.Snapshot.Repository do
   """
 
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Registers a repository.
@@ -16,7 +16,7 @@ defmodule Rubber.Snapshot.Repository do
   def register(elastic_url, repo_name, data, query_params \\ []) do
     elastic_url
     |> prepare_url(make_path(repo_name, query_params))
-    |> HTTP.put(Poison.encode!(data))
+    |> HTTP.put(JSON.encode!(data))
   end
 
   @doc """

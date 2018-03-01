@@ -6,7 +6,7 @@ defmodule Rubber.Snapshot.Snapshot do
   """
 
   import Rubber.HTTP, only: [prepare_url: 2]
-  alias Rubber.HTTP
+  alias Rubber.{HTTP, JSON}
 
   @doc """
   Creates a snapshot.
@@ -16,7 +16,7 @@ defmodule Rubber.Snapshot.Snapshot do
   def create(elastic_url, repo_name, snapshot_name, data \\ %{}, query_params \\ []) do
     elastic_url
     |> prepare_url(make_path(repo_name, snapshot_name, query_params))
-    |> HTTP.put(Poison.encode!(data))
+    |> HTTP.put(JSON.encode!(data))
   end
 
   @doc """
@@ -27,7 +27,7 @@ defmodule Rubber.Snapshot.Snapshot do
   def restore(elastic_url, repo_name, snapshot_name, data \\ %{}) do
     elastic_url
     |> prepare_url([make_path(repo_name, snapshot_name), "_restore"])
-    |> HTTP.post(Poison.encode!(data))
+    |> HTTP.post(JSON.encode!(data))
   end
 
   @doc """
